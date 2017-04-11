@@ -64,7 +64,7 @@ $ [ INFO ]Please enter the validation data path in local machine:
 ```
 ```shell=
 $ [ INFO ]Please enter the path to save the trained model in local machine:
-./Model
+./model
 ```
 ### Predict with the Model
 
