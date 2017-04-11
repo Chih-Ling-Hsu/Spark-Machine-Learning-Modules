@@ -12,12 +12,9 @@ This project is aiming for simple access and usage of machine learning on Spark.
 ```git
 git clone https://github.com/Chih-Ling-Hsu/Spark-Machine-Learning-Modules.git
 ```
-2. **[Prepare input data](#prepare-input-data)**
-There are some restrictions on the input format of the module.   For more details, please [click this link](#prepare-input-data).
-3. **[Run the module using predefined shell script](#use-the-predefined-shell-script)**
-Using predefined shell script allows you to depoly the module simply follow step-by-step instructions.
-4. **[Run the module using custom arguments](#use-commands)**
-You can also run the commands by yourself.
+2. **[Prepare input data](#prepare-input-data)** - There are some restrictions on the input format of the module.   For more details, please [click this link](#prepare-input-data).
+3. **[Run the module using predefined shell script](#use-the-predefined-shell-script)** - Using predefined shell script allows you to depoly the module simply follow step-by-step instructions.
+4. **[Run the module using custom arguments](#use-commands)** - You can also run the commands by yourself.
 
 ## Prepare Input Data
 This section explains the restrictions and limitations on the format and content of the input data.
