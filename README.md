@@ -34,16 +34,18 @@ For convenience, I have written a shell script to make you deploy the module in 
 
 #### Step 1. Package the module
 ```shell=
-# Go to directory of the downloaded project
+// Go to directory of the downloaded project
 $ cd Spark-Machine-Learning-Modules
-# Package
+// Go to directory of module you want to use (e.g. LogisticRegression)
+$ cd LogisticRegression
+// Package
 $ mvn clean package
 ```
 #### Step 2. Run `lr.sh`
 ```shell=
-# Go back to root directory
+// Go back to root directory
 $ cd ..
-# Run predefined shell script
+// Run predefined shell script
 $ sh lr.sh
 ```
 
@@ -68,16 +70,18 @@ $ [ INFO ]Please enter the path to save the trained model in local machine:
 
 #### Step 1. Package the module
 ```shell=
-# Go to directory of the downloaded project
+// Go to directory of the downloaded project
 $ cd Spark-Machine-Learning-Modules
-# Package
+// Go to directory of module you want to use (e.g. LogisticRegression)
+$ cd LogisticRegression
+// Package
 $ mvn clean package
 ```
 #### Step 2. Run `lr.sh`
 ```shell=
-# Go back to root directory
+// Go back to root directory
 $ cd ..
-# Run predefined shell script
+// Run predefined shell script
 $ sh lr.sh
 ```
 
