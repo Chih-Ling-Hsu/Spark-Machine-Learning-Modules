@@ -24,7 +24,9 @@ if [ "$EXETYPE" == "$TRAIN" ]; then
   spark-submit  --class "LogisticRegression"  LogisticRegression/target/spark-sample-0.0.1.jar 0 remoteFolder/input/train remoteFolder/input/test remoteFolder/output
   echo "[ INFO ]Please enter the path to save the trained model in local machine:"
   read MODEL_PATH
-  rm -r $MODEL_PATH
+  if [ -d "$MODEL_PATH" ]; then
+    rm -r $MODEL_PATH
+  fi  
   hadoop fs -copyToLocal remoteFolder/output/model/LogisticRegressionModel $MODEL_PATH
 else
 	echo "[ INFO ]Please enter the testing data path in local machine:"
