@@ -4,7 +4,7 @@ This project is aiming for simple access and usage of machine learning on Spark.
 
 ## Prerequisites
 - Spark version: 1.5.0
-- Python version: 2.6.6
+- Java version: 1.8
 
 ## How to Use
 
