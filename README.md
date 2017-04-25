@@ -14,7 +14,6 @@ git clone https://github.com/Chih-Ling-Hsu/Spark-Machine-Learning-Modules.git
 ```
 2. **[Prepare input data](#prepare-input-data)** - There are some restrictions on the input format of the module.   For more details, please [click this link](#prepare-input-data).
 3. **[Run the module using predefined shell script](#use-the-predefined-shell-script)** - Using predefined shell script allows you to depoly the module simply by setting a `config.json` file.
-4. **[Run the module using custom arguments](#use-commands)** - You can also run the commands by yourself.
 
 ## Prepare Input Data
 This section explains the restrictions and limitations on the format and content of the input data.
@@ -121,52 +120,3 @@ Note that `config.json` should be saved in the same directory as `lr_json.sh`
 ...
 ...
 ```
-
-
-## Use Commands
-
-This section introduce how to run a java application on spark using commands.   For more information, please go to the official web site of Spark.
-
-### `Package` the application using Maven.
-```shell
-# Package a JAR containing your application
-$ mvn package
-...
-[INFO] Building jar: {..}/{..}/target/NAME_OF_YOUR_JAR
-```
-
-Note that you `NAME_OF_YOUR_JAR` would be used in the following steps.
-
-### Prepare input file and output environment
-```shell
-# Make input directory
-$ hadoop fs -mkdir remoteFolder
-$ hadoop fs -mkdir remoteFolder/input
-# Copy input file(s) from local to remote
-$ hadoop fs -copyFromLocal YOUR_INPUT_FILE_PATH remoteFolder/input
-# Remove output directory to prevent conflicts 
-$ hadoop fs -rm -r remoteFolder/output
-```
-
-Note that you should specify `YOUR_INPUT_FILE_PATH` by yourself.
-
-### Execute it with `spark-submit`
-```shell
-# Use spark-submit to run your application
-$ spark-submit --class NAME_OF_MODULE NAME_OF_YOUR_JAR
-```
-- Note that you fill up your main java class name, which is `NAME_OF_MODULE`, after ````--class````
-
-### View and download the output files
-```sh
-# List the output files
-$ hadoop fs -ls test/output
-# View the output files
-$ hadoop fs -cat test/output/part-*
-```
-```sh
-# Download output files from remote to local
-hadoop fs -copyToLocal remoteFolder/output YOUR_OUTPUT_PATH
-```
-
-Note that you should specify `YOUR_OUTPUT_PATH` by yourself.
