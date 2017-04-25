@@ -1,11 +1,9 @@
-cd LogisticRegression
-
 if $(hadoop fs -test -d "remoteFolder/") ; then
   hadoop fs -rm -r remoteFolder/
 fi
 hadoop fs -mkdir remoteFolder/
 hadoop fs -mkdir remoteFolder/input
-cd ..
+
 
 TRAIN="train"
 PREDICT="predict"
@@ -21,7 +19,7 @@ if [ "$EXETYPE" == "$TRAIN" ]; then
   read VALID_PATH
   hadoop fs -copyFromLocal $TRAIN_PATH remoteFolder/input/train
   hadoop fs -copyFromLocal $VALID_PATH remoteFolder/input/test
-  spark-submit  --class "LogisticRegression"  LogisticRegression/target/spark-sample-0.0.1.jar 0 remoteFolder/input/train remoteFolder/input/test remoteFolder/output
+  spark-submit  --class "LogisticRegression"  LogisticRegression/target/spark-sample-0.0.1.jar LogisticRegressionModel 0 remoteFolder/input/train remoteFolder/input/test remoteFolder/output
   echo "[ INFO ]Please enter the path to save the trained model in local machine:"
   read MODEL_PATH
   if [ -d "$MODEL_PATH" ]; then
@@ -35,7 +33,7 @@ else
   read MODEL_PATH
   hadoop fs -copyFromLocal $TEST_PATH remoteFolder/input/test
   hadoop fs -copyFromLocal $MODEL_PATH remoteFolder/input/model
-  spark-submit  --class "LogisticRegression"  LogisticRegression/target/spark-sample-0.0.1.jar 1 remoteFolder/input/model remoteFolder/input/test remoteFolder/output
+  spark-submit  --class "LogisticRegression"  LogisticRegression/target/spark-sample-0.0.1.jar LogisticRegressionModel 1 remoteFolder/input/model remoteFolder/input/test remoteFolder/output
   echo "[ INFO ]Please enter the path to save the prediction result in local machine:"
   read RESULT_PATH
   if [ -d "$RESULT_PATH" ]; then

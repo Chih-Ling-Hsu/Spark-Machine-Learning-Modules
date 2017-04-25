@@ -1,0 +1,23 @@
+{
+  "Packaged JAR": "Classification/target/spark-sample-0.0.1.jar",
+  "Operation": "train",  
+  "Classification Model": {
+    "model name": "SVMModel",
+    "training method": "SGD",
+    "number of classes": "2"
+  },
+  "Training Parameters": {
+    "number of iterations": "100",
+    "step size": "0.001"
+  },
+  "Input Paths": {
+    "training data path in local machine": "./input/logistic_train_input",
+    "validation data path in local machine": "./input/logistic_test_input",
+    "testing data path in local machine": "./input/logistic_test_input",
+    "trained model path in local machine": "./model"
+  },
+  "Output Paths": {
+    "path to save the trained model in local machine": "./model",
+    "path to save the prediction result in local machine": "./output"
+  }
+}

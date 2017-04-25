@@ -2,7 +2,7 @@
   <groupId>org.nchc.spark</groupId>
   <artifactId>spark-sample</artifactId>
   <modelVersion>4.0.0</modelVersion>
-  <name>LogisticRegression</name>
+  <name>Classification</name>
   <packaging>jar</packaging>
   <version>0.0.1</version>
   <properties>
