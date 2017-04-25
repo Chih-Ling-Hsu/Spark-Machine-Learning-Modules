@@ -22,7 +22,7 @@ This section explains the restrictions and limitations on the format and content
 - **Notice 1.** the **target** class should be at the **last** column.
 - **Notice 2.** the header column should be removed from the input dataset.
 - **Notice 3.** null values are not allowed.
-- **Notice 4.** Note that _Naive Bayes Classification_ requires _nonnegative_ feature values.
+- **Notice 4.** _Naive Bayes Classification_ requires _nonnegative_ feature values.
 
 [Here](https://hackmd.io/s/SkEYWCnjg) is an example (written in Python) to prepare the input data for Logistic Regression using [Airline Data](http://stat-computing.org/dataexpo/2009/the-data.html).
 
