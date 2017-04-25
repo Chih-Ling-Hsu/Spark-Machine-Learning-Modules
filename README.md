@@ -30,7 +30,7 @@ This section explains the restrictions and limitations on the format and content
 
 For convenience, I have written a shell script to make you deploy the module in a simple way.
 
-### Step 1. Set Varibles in `config.json`
+### Step 1. Set Variables in `config.json`
 
 ```json=
 {
