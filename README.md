@@ -12,7 +12,7 @@ This project is aiming for simple access and usage of machine learning on Spark.
 ```git
 git clone https://github.com/Chih-Ling-Hsu/Spark-Machine-Learning-Modules.git
 ```
-2. **[Prepare input data](#prepare-input-data)** - There are some restrictions on the input format of the module.   For more details, please [click this link](#prepare-input-data).
+2. **[Prepare input data](#prepare-input-data)** - There are some restrictions on the input format of the module.
 3. **Packge the module** - if module `Classification` is going to be used, then you should package it first.
 ```shell
 $ cd Classification
