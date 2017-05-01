@@ -11,9 +11,9 @@
     "step size": "0.001"
   },
   "Input Paths": {
-    "training data path in local machine": "./input/logistic_train_input",
-    "validation data path in local machine": "./input/logistic_test_input",
-    "testing data path in local machine": "./input/logistic_test_input",
+    "training data path in local machine": "./data/classification_train_input",
+    "validation data path in local machine": "./data/classification_test_input",
+    "testing data path in local machine": "./data/classification_test_input",
     "trained model path in local machine": "./model"
   },
   "Output Paths": {

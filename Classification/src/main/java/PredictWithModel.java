@@ -33,7 +33,7 @@ public class PredictWithModel<T> {
       
       //Load testing data
       LoadProcess loadProcess = new LoadProcess(sc, minPartition);    
-      testingData = loadProcess.load(testFile);  
+      testingData = loadProcess.load(testFile, "Vector");  
       testingData.cache();    
   }
 
@@ -44,8 +44,8 @@ public class PredictWithModel<T> {
       JavaRDD<Tuple2<Object, Object>> FeaturesAndPrediction = predictUnit.predictForOutput(modelName, model, testingData, numClasses);
 
       //Evaluate Testing Result
-      EvaluateProcess<T> evalProcess = new EvaluateProcess<T>(model, modelName, testingData, numClasses);
-      evalProcess.evalute(numClasses);
+      //EvaluateProcess<T> evalProcess = new EvaluateProcess<T>(model, modelName, testingData, numClasses);
+      //evalProcess.evalute(numClasses);
 
       return FeaturesAndPrediction;    
   }

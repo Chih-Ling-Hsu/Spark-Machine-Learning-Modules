@@ -23,7 +23,7 @@ public class PredictUnit<T> {
         //Predict
         predictionAndLabels = PredictUnit.predictForMetrics_SVMModel(svmmodel, data);
       }
-      else if(modelName == "NaiveBayesModel"){
+      else if(modelName.equals("NaiveBayesModel")){
         NaiveBayesModel bayesmodel = (NaiveBayesModel) model;        
         //Predict
         predictionAndLabels = PredictUnit.predictForMetrics_NaiveBayesModel(bayesmodel, data);
@@ -43,7 +43,7 @@ public class PredictUnit<T> {
         //Predict
         FeaturesAndPrediction = PredictUnit.predictForOutput_SVMModel(svmmodel, data);
       }
-      else if(modelName == "NaiveBayesModel"){
+      else if(modelName.equals("NaiveBayesModel")){
         NaiveBayesModel bayesmodel = (NaiveBayesModel) model;        
         //Predict
         FeaturesAndPrediction = PredictUnit.predictForOutput_NaiveBayesModel(bayesmodel, data);

@@ -10,6 +10,7 @@ public class LoadProcess {
   public int minPartition;
   public SparkContext sc;
   public ParsingUnit pUnit;
+  JavaRDD<LabeledPoint> parsedData = null;
 
   public LoadProcess(SparkContext sc, int minPartition){
       this.sc = sc;
@@ -17,19 +18,18 @@ public class LoadProcess {
       this.pUnit = new ParsingUnit();
   }
 
-  public JavaRDD<LabeledPoint> load(String filepath){    
+  public JavaRDD<LabeledPoint> load(String filepath, String type){    
       // Load from file
-      JavaRDD<String> data = LoadJRDDstr(filepath, this.sc, this.minPartition);      
+      JavaRDD<String> data = sc.textFile(filepath, minPartition).toJavaRDD();      
       // Parse the data
-      JavaRDD<LabeledPoint> parsedData = pUnit.JRDDstr_to_JRDDpt(data,",", -1);
+      if(type.equals("LabeledPoint")){
+          parsedData = pUnit.parseLabeledPoint(data,",", -1);
+      }
+      else{
+          parsedData = pUnit.parseLabeledPoint(data,",");
+      }
 
       return parsedData;
-  }
-
-  public JavaRDD<String> LoadJRDDstr(String filepath, SparkContext sc, int minPartition){
-      RDD<String> input = sc.textFile(filepath, minPartition);
-      JavaRDD<String> data = input.toJavaRDD(); 
-      return data;
   }
 }
 

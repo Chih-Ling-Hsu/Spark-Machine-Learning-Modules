@@ -31,9 +31,9 @@ public class TrainModel<T> {
 
       // Load training/validate data
       LoadProcess loadProcess = new LoadProcess(sc, this.minPartition);   
-      trainingData = loadProcess.load(trainFile);
+      trainingData = loadProcess.load(trainFile, "LabeledPoint");
       trainingData.cache();
-      validData = loadProcess.load(validFile);      
+      validData = loadProcess.load(validFile, "LabeledPoint");      
       validData.cache();
   }
 

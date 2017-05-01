@@ -6,6 +6,15 @@ This project is aiming for simple access and usage of machine learning on Spark.
 - Spark version: 1.5.0
 - Java version: 1.8
 
+## Classification Models Supported
+
+- Logistic Regression Model
+    - SGD
+    - LBFGS
+- SVM Model
+    - SGD
+- Naive Bayes Model
+
 ## How to Use
 
 1. **Download this project**
@@ -19,16 +28,23 @@ $ cd Classification
 $ mvn clean package
 ```
 4. **[Run the module using predefined shell script](#use-the-predefined-shell-script)** - Using predefined shell script allows you to depoly the module simply by setting a `config.json` file.
+5. **[Check training/testing result](#execution-output)** - After training, the trained model is saved to the location you specified in `config.json`. After testing, the prediction result is saved to the location you specified in `config.json`.
 
 ## Prepare Input Data
 This section explains the restrictions and limitations on the format and content of the input data.
+
+### Training Input
 
 - **Notice 1.** the **target** class should be at the **last** column.
 - **Notice 2.** the header column should be removed from the input dataset.
 - **Notice 3.** null values are not allowed.
 - **Notice 4.** _Naive Bayes Classification_ requires _nonnegative_ feature values.
 
-[Here](https://hackmd.io/s/SkEYWCnjg) is an example (written in Python) to prepare the input data for Logistic Regression using [Airline Data](http://stat-computing.org/dataexpo/2009/the-data.html).
+[Here](https://hackmd.io/s/SkEYWCnjg) is an example (written in Python) to prepare the input data for Classification using [Airline Data](http://stat-computing.org/dataexpo/2009/the-data.html).
+
+### Testing Input
+
+The format of testing input is the same as that of the training input, except that it has no target class. That is, it has one less column than the training input.
 
 ## Use The Predefined Shell Script 
 
@@ -50,9 +66,9 @@ For convenience, I have written a shell script to make you deploy the module in 
     "step size": "0.001"
   },
   "Input Paths": {
-    "training data path in local machine": "./input/logistic_train_input",
-    "validation data path in local machine": "./input/logistic_test_input",
-    "testing data path in local machine": "./input/logistic_test_input",
+    "training data path in local machine": "./data/classification_train_input",
+    "validation data path in local machine": "./data/classification_valid_input",
+    "testing data path in local machine": "./data/classification_test_input",
     "trained model path in local machine": "./model"
   },
   "Output Paths": {
@@ -83,7 +99,14 @@ $ sh lr_json.sh
 ```
 Note that `config.json` should be saved in the same directory as `lr_json.sh`
 
-### Step 3. Check evaluation results
+
+## Exexcution Output
+
+After training, the trained model is saved to the location you specified in `config.json`. After testing, the prediction result is saved to the location you specified in `config.json`.
+
+### During Training Process
+
+During Training Process, the evaluation of the trained model would show on screen.
 
 ```shell
 ...
@@ -125,3 +148,26 @@ Note that `config.json` should be saved in the same directory as `lr_json.sh`
 ...
 ...
 ```
+
+### After Training Process
+
+After training, the trained model is saved to the location you specified in `config.json`.
+
+### After Testing Process
+
+After testing, the prediction result is saved to the location you specified in `config.json`.   The format of the prediction result would be **one tuple per line**.
+
+For example, if you require the prediction output of a point with features 
+
+```java
+[0.0, 1.2, 0.1]
+```
+
+Then you can retreive the prediction output by
+
+```sh
+$ cat part-0000 | grep "[0.0, 1.2, 0.1]"
+([0.0, 1.2, 0.1], 1.0)
+```
+
+where `part-0000` is the output file name and `1.0` is the prediction output.
