@@ -14,37 +14,49 @@ public class PredictUnit<T> {
   public JavaRDD<Tuple2<Object, Object>> predictForMetrics(String modelName, T model, JavaRDD<LabeledPoint> data, int numClasses){
       JavaRDD<Tuple2<Object, Object>> predictionAndLabels = null;
       if(modelName.equals("LogisticRegressionModel")){
-        LogisticRegressionModel lrmodel = (LogisticRegressionModel) model;        
+        LogisticRegressionModel lrmodel = (LogisticRegressionModel) model;      
+        if(numClasses==2){
+          lrmodel.clearThreshold();
+        } 
         //Predict
         predictionAndLabels = PredictUnit.predictForMetrics_LogisticRegressionModel(lrmodel, data);
       }
       else if(modelName.equals("SVMModel")){
-        SVMModel svmmodel = (SVMModel) model;        
+        SVMModel svmmodel = (SVMModel) model;      
+        if(numClasses==2){
+          svmmodel.clearThreshold();
+        }     
         //Predict
         predictionAndLabels = PredictUnit.predictForMetrics_SVMModel(svmmodel, data);
       }
       else if(modelName.equals("NaiveBayesModel")){
-        NaiveBayesModel bayesmodel = (NaiveBayesModel) model;        
+        NaiveBayesModel bayesmodel = (NaiveBayesModel) model;      
         //Predict
         predictionAndLabels = PredictUnit.predictForMetrics_NaiveBayesModel(bayesmodel, data);
       }
       return predictionAndLabels;
   }
 
-  public JavaRDD<Tuple2<Object, Object>> predictForOutput(String modelName, T model, JavaRDD<LabeledPoint> data, int numClasses){
+  public JavaRDD<Tuple2<Object, Object>> predictForOutput(String modelName, T model, JavaRDD<LabeledPoint> data, int numClasses, double threshold){
       JavaRDD<Tuple2<Object, Object>> FeaturesAndPrediction = null;
       if(modelName.equals("LogisticRegressionModel")){
-        LogisticRegressionModel lrmodel = (LogisticRegressionModel) model;    
+        LogisticRegressionModel lrmodel = (LogisticRegressionModel) model; 
+        if(numClasses==2){
+          lrmodel.setThreshold(threshold);
+        }  
         //Predict
         FeaturesAndPrediction = PredictUnit.predictForOutput_LogisticRegressionModel(lrmodel, data);
       }
       else if(modelName.equals("SVMModel")){
-        SVMModel svmmodel = (SVMModel) model;        
+        SVMModel svmmodel = (SVMModel) model;     
+        if(numClasses==2){
+          svmmodel.setThreshold(threshold);
+        }
         //Predict
         FeaturesAndPrediction = PredictUnit.predictForOutput_SVMModel(svmmodel, data);
       }
       else if(modelName.equals("NaiveBayesModel")){
-        NaiveBayesModel bayesmodel = (NaiveBayesModel) model;        
+        NaiveBayesModel bayesmodel = (NaiveBayesModel) model;    
         //Predict
         FeaturesAndPrediction = PredictUnit.predictForOutput_NaiveBayesModel(bayesmodel, data);
       }

@@ -18,12 +18,26 @@ public class LoadProcess {
       this.pUnit = new ParsingUnit();
   }
 
+  public JavaRDD<LabeledPoint> load(String filepath, String type, int targetClassIdx){    
+      // Load from file
+      JavaRDD<String> data = sc.textFile(filepath, minPartition).toJavaRDD();      
+      // Parse the data
+      if(type.equals("LabeledPoint")){
+          parsedData = pUnit.parseLabeledPoint(data,",", targetClassIdx);
+      }
+      else{
+          parsedData = pUnit.parseLabeledPoint(data,",");
+      }
+
+      return parsedData;
+  }
+
   public JavaRDD<LabeledPoint> load(String filepath, String type){    
       // Load from file
       JavaRDD<String> data = sc.textFile(filepath, minPartition).toJavaRDD();      
       // Parse the data
       if(type.equals("LabeledPoint")){
-          parsedData = pUnit.parseLabeledPoint(data,",", -1);
+          parsedData = pUnit.parseLabeledPoint(data,",");
       }
       else{
           parsedData = pUnit.parseLabeledPoint(data,",");

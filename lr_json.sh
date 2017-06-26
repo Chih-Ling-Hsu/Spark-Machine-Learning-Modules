@@ -3,8 +3,10 @@ PREDICT="predict"
 MODEL_NAME="$( cat config.json | grep -Po '(?<="model name": ")[^"]*')"
 TRAIN_METHOD="$( cat config.json | grep -Po '(?<="training method": ")[^"]*')"
 NUM_CLASS="$( cat config.json | grep -Po '(?<="number of classes": ")[^"]*')"
+THRESHOLD="$( cat config.json | grep -Po '(?<="threshold": ")[^"]*')"
 TRAIN_ITER="$( cat config.json | grep -Po '(?<="number of iterations": ")[^"]*')"
 EXETYPE="$( cat config.json | grep -Po '(?<="Operation": ")[^"]*')"
+TARGET_IDX="$( cat config.json | grep -Po '(?<="Target Column Index": ")[^"]*')"
 JAR="$( cat config.json | grep -Po '(?<="Packaged JAR": ")[^"]*')"
 TRAIN_PATH="$( cat config.json | grep -Po '(?<="training data path in local machine": ")[^"]*')"
 VALID_PATH="$( cat config.json | grep -Po '(?<="validation data path in local machine": ")[^"]*')"
@@ -25,7 +27,7 @@ if [ "$EXETYPE" == "$TRAIN" ]; then
   hadoop fs -copyFromLocal $TRAIN_PATH remoteFolder/input/train
   echo [ INFO ] Uploading validation data from "$VALID_PATH" to "remoteFolder/input/test"...
   hadoop fs -copyFromLocal $VALID_PATH remoteFolder/input/test
-  spark-submit  --class "Classification"  $JAR  $MODEL_NAME $NUM_CLASS 0 remoteFolder/input/train remoteFolder/input/test remoteFolder/output $TRAIN_METHOD $TRAIN_ITER
+  spark-submit  --class "Classification"  $JAR  $MODEL_NAME $NUM_CLASS 0 remoteFolder/input/train remoteFolder/input/test remoteFolder/output $TRAIN_METHOD $TARGET_IDX $TRAIN_ITER
   echo [ INFO ] Downloading trained model from "remoteFolder/output/model/$MODEL_NAME" to "$WRITE_MODEL_PATH"...
   if [ -d "$WRITE_MODEL_PATH" ]; then
     rm -r $WRITE_MODEL_PATH
@@ -36,7 +38,7 @@ else
   hadoop fs -copyFromLocal $TEST_PATH remoteFolder/input/test
   echo [ INFO ] Uploading trained model from "$READ_MODEL_PATH" to "remoteFolder/input/model"...
   hadoop fs -copyFromLocal $READ_MODEL_PATH remoteFolder/input/model
-  spark-submit  --class "Classification" $JAR  $MODEL_NAME $NUM_CLASS 1 remoteFolder/input/model remoteFolder/input/test remoteFolder/output $TRAIN_METHOD $TRAIN_ITER
+  spark-submit  --class "Classification" $JAR  $MODEL_NAME $NUM_CLASS 1 remoteFolder/input/model remoteFolder/input/test remoteFolder/output $THRESHOLD
   echo [ INFO ] Downloading prediction output from "remoteFolder/output" to "$RESULT_PATH"...
   if [ -d "$RESULT_PATH" ]; then
     rm -r $RESULT_PATH

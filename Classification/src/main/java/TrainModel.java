@@ -16,6 +16,7 @@ public class TrainModel<T> {
 
   public int minPartition = 1;
   public int numClasses = 2;
+  //public double threshold = 0.5; 
   public String trainFile;
   public String validFile;
   public String modelName;
@@ -23,7 +24,7 @@ public class TrainModel<T> {
   public JavaRDD<LabeledPoint> trainingData;
   public JavaRDD<LabeledPoint> validData;
 
-  public TrainModel(SparkContext sc, String trainFile, String validFile, int numClasses, String modelName){
+  public TrainModel(SparkContext sc, String trainFile, String validFile, int numClasses, String modelName, int colIdx){
       this.trainFile = trainFile;
       this.validFile = validFile;
       this.numClasses = numClasses;
@@ -31,9 +32,9 @@ public class TrainModel<T> {
 
       // Load training/validate data
       LoadProcess loadProcess = new LoadProcess(sc, this.minPartition);   
-      trainingData = loadProcess.load(trainFile, "LabeledPoint");
+      trainingData = loadProcess.load(trainFile, "LabeledPoint", colIdx);
       trainingData.cache();
-      validData = loadProcess.load(validFile, "LabeledPoint");      
+      validData = loadProcess.load(validFile, "LabeledPoint", colIdx);      
       validData.cache();
   }
 
@@ -44,9 +45,14 @@ public class TrainModel<T> {
         LogisticRegressionModel lrmodel = new LogisticRegressionWithLBFGS()
         .setNumClasses(numClasses)
         .run(trainingData.rdd());  
+
+        System.out.println("\n--------------------------------------\n weights: " + lrmodel.weights());
+        System.out.println("--------------------------------------\n");
+
+
         this.model = (T)(Object) lrmodel;
       } 
-
+      
       //Evalute the trained model      
       EvaluateProcess<T> evalProcess = new EvaluateProcess<T>(model, modelName, validData, numClasses);
       evalProcess.evalute(numClasses);

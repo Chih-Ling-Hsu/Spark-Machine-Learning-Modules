@@ -12,11 +12,13 @@ import org.apache.spark.mllib.classification.NaiveBayesModel;
 public class PredictWithModel<T> {
   public T model = null;
   public int numClasses;
+  public double threshold;
   public JavaRDD<LabeledPoint> testingData;
 
   @SuppressWarnings("unchecked")
-  public PredictWithModel(String modelName, String modelPath, String testFile, int numClasses, int minPartition, SparkContext sc){
+  public PredictWithModel(String modelName, String modelPath, String testFile, int numClasses, int minPartition, double threshold, SparkContext sc){
       this.numClasses = numClasses;
+      this.threshold = threshold;
 
       if(modelName.equals("LogisticRegressionModel")){
         LogisticRegressionModel lrmodel = LogisticRegressionModel.load(sc, modelPath);
@@ -41,7 +43,7 @@ public class PredictWithModel<T> {
            
       //Predict Testing data
       PredictUnit<T> predictUnit = new PredictUnit<T>();
-      JavaRDD<Tuple2<Object, Object>> FeaturesAndPrediction = predictUnit.predictForOutput(modelName, model, testingData, numClasses);
+      JavaRDD<Tuple2<Object, Object>> FeaturesAndPrediction = predictUnit.predictForOutput(modelName, model, testingData, numClasses, this.threshold);
 
       //Evaluate Testing Result
       //EvaluateProcess<T> evalProcess = new EvaluateProcess<T>(model, modelName, testingData, numClasses);
